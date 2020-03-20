@@ -1,0 +1,534 @@
+---
+title: "learnTidy"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+learnr::tutorial_options(exercise.completion = FALSE)
+```
+
+## Files
+
+------
+
+### Names
+
+`r emo::ji('pushpin')` Rules :
+
+- File names should be meaningful and end in .R. 
+- Avoid using special characters in file names - stick with numbers, letters, `-`, and `_`. 
+
+```{r q-files-1-setup}
+`fit_models.R` <- "Correct"
+`utility_functions.R` <- "Correct"
+`fit models.R` <- "Wrong"
+`utility functions.r` <- "Wrong"
+```
+
+<p font-size:2em> Exercise : </p>
+Fix following Names and run it with `Run code`. 
+If it is correct, `Correct` will be returned.
+
+```{r q-files-1, exercise = TRUE, exercise.setup = "q-files-1-setup"}
+`fit models.R`
+`utility functions.r`
+```
+
+`r emo::ji('pushpin')` Rules :
+
+- If files should be run in a particular order, prefix them with numbers. 
+- If it seems likely you’ll have more than 10 files, left pad with zero:
+
+```
+00_download.R
+1_explore.R
+02_trim.R
+...
+
+09_model.R
+visualize.R
+11_summary.R
+
+```
+
+```{r q-files-2-setup}
+`01_explore.R` <- "Correct"
+`10_visualize.R` <- "Correct"
+
+`1_explore.R` <- "Wrong"
+`visualize.R` <- "Wrong"
+```
+
+<p font-size:2em> Exercise : </p>
+Fix following name of codes, `1_explore.R` and `visualize.R` then run it with `Run code`. 
+If it is correct, `TRUE` will be returned.
+
+```{r q-files-2, exercise = TRUE, exersie.setup = "q2-setup"}
+`1_explore.R`
+`visualize.R`
+```
+
+------
+
+### Internal Structure
+
+`r emo::ji('pushpin')` Rules :
+
+- Use commented lines of `-` and `=` to break up your file into easily readable chunks.
+
+<p font-size:2em> Question : </p>
+```{r q-files-3, echo = FALSE}
+question("Select all recommended style of comment.",
+  answer("#　Comment style A", correct = FALSE),
+  answer("#　Comment style B -----------------------", correct = TRUE),
+  answer("#Comment style C ========", correct = FALSE),
+  answer("#　Comment style D ========", correct = TRUE),
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+
+## Syntax
+
+------
+
+### Object Names
+
+`r emo::ji('pushpin')` Rules :
+
+- Variable and function names should use only lowercase letters, numbers, and `_`. 
+- Use underscores (`_`) (so called snake case) to separate words within a name.
+
+```{r q-syntax-1-setup}
+`day_one` <- "Correct"
+`DayOne` <- "Wrong"
+```
+
+<p font-size:2em> Exercise : </p>
+Fix following codes and run it with `Run code`. 
+If it is correct, `Correct` will be returned.
+
+```{r q-syntax-1, exercise = TRUE, exercise.setup = "q-syntax-1-setup"}
+`DayOne` 
+```
+
+`r emo::ji('pushpin')` Rules :
+
+- Base R uses dots in function names (`contrib.url()`) and class names (`data.frame`), but it’s better to reserve dots exclusively for the S3 object system. In S3, methods are given the name function.class. 
+- If you also use . in function and class names, you end up with confusing methods like as.data.frame.data.frame().
+- Generally, variable names should be nouns and function names should be verbs. Strive for names that are concise and meaningful (this is not easy!).
+- Where possible, avoid re-using names of common functions and variables. This will cause confusion for the readers of your code.
+
+<p font-size:2em> Question : </p>
+```{r q-syntax-2, echo = FALSE}
+question("Select all recommended style of object name.",
+  answer("first_day_of_the_month", correct = FALSE),
+  answer("djm1", correct = FALSE),
+  answer("dayone", correct = FALSE),
+  answer("T", correct = FALSE),
+  answer("t", correct = FALSE),
+  answer("c", correct = FALSE),
+  answer("C", correct = TRUE),
+  answer("mean", correct = TRUE),
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+------
+
+### Spacing
+
+#### Commas
+
+`r emo::ji('pushpin')` Rules :
+
+- Always put a space after a comma, never before, just like in regular English. 
+
+```{r q-syntax-3-setup}
+`x[, 1]` <- "Correct"
+`x[,1]` <- "Wrong"
+`x[ , 1]` <- "Wrong"
+`x[ ,1]` <- "Wrong"
+```
+
+<p font-size:2em> Exercise : </p>
+Fix following codes and run it with `Run code`. 
+If it is correct, `Correct` will be returned.
+
+```{r q-syntax-3, exercise = TRUE, exercise.setup = "q-syntax-3-setup"}
+`x[,1]` 
+```
+
+#### Parentheses
+
+`r emo::ji('pushpin')` Rules :
+
+- Do not put spaces inside or outside parentheses for regular function calls.
+- Place a space before and after `()` when used with `if`, `for`, or `while`.
+- Place a space after `()` used for function arguments.
+
+```{r q-syntax-4-setup}
+`mean(x, na.rm = TRUE)` <- "Correct"
+`mean (x, na.rm = TRUE)` <- "Wrong"
+`mean( x, na.rm = TRUE )` <- "Wrong"
+`mean( x, na.rm = TRUE ) ` <- "Wrong"
+`mean ( x, na.rm = TRUE ) ` <- "Wrong"
+
+`if(debug) show(x)` <- "Wrong"
+`if (debug) show(x)` <- "Correct"
+
+```
+
+<p font-size:2em> Exercise : </p>
+Fix following codes and run it with `Run code`. 
+If it is correct, `Correct` will be returned.
+
+```{r q-syntax-4, exercise = TRUE, exercise.setup = "q-syntax-4-setup"}
+`mean ( x, na.rm = TRUE ) ` 
+`if(debug) show(x)`
+```
+
+#### Infix operators
+
+`r emo::ji('pushpin')` Rules :
+
+- Most infix operators (`==`, `+`, `-`, `<-`, etc.) should always be surrounded by spaces:
+
+```{r q-syntax-5-setup}
+`height <- (feet * 12) + inches` <- "Correct"
+`mean(x, na.rm = TRUE)` <- "Correct"
+`height<-feet*12+inches` <- "Wrong"
+`mean(x, na.rm=TRUE)` <- "Wrong"
+```
+
+<p font-size:2em> Exercise : </p>
+Fix following codes and run it with `Run code`. 
+If it is correct, `Correct` will be returned.
+
+```{r q-syntax-5, exercise = TRUE, exercise.setup = "q-syntax-5-setup"}
+`mean ( x, na.rm = TRUE ) ` 
+`if(debug) show(x)`
+```
+
+`r emo::ji('pushpin')` Rules :
+
+- There are a few exceptions, which should never be surrounded by spaces:
+- The operators with high precedence: `::`, `:::`, `$`, `@`, `[`, `[[`, `^`, unary `-`, unary `+`, and `:`.
+
+```{r q-syntax-6-setup}
+`sqrt(x^2 + y^2)` <- "Correct"
+`df$z` <- "Correct"
+`x <- 1:10` <- "Correct"
+`sqrt(x ^ 2 + y ^ 2)` <- "Wrong"
+`df $ z` <- "Wrong"
+`x <- 1 : 10` <- "Wrong"
+```
+
+<p font-size:2em> Exercise : </p>
+Fix following codes and run it with `Run code`. 
+If it is correct, `Correct` will be returned.
+
+```{r q-syntax-6, exercise = TRUE, exercise.setup = "q-syntax-6-setup"}
+`sqrt(x ^ 2 + y ^ 2)` 
+`df $ z`
+`x <- 1 : 10`
+```
+
+`r emo::ji('pushpin')` Rules :
+
+- Single-sided formulas (`~`) when the right-hand side is a single identifier:
+- Note that single-sided formulas with a complex right-hand side do need a space:
+
+```{r q-syntax-7-setup}
+`~foo` <- "Correct"
+`tribble(~col1, ~col2, "a", "b")` <- "Correct"
+`~ .x + .y` <- "Correct"
+`~ foo` <- "Wrong"
+`tribble(~ col1, ~ col2, "a", "b")` <- "Wrong"
+`~.x + .y` <- "Wrong"
+```
+
+<p font-size:2em> Exercise : </p>
+Fix following codes and run it with `Run code`. 
+If it is correct, `Correct` will be returned.
+
+```{r q-syntax-7, exercise = TRUE, exercise.setup = "q-syntax-7-setup"}
+`~ foo`
+`tribble(~ col1, ~ col2, "a", "b")`
+`~.x + .y`
+```
+
+`r emo::ji('pushpin')` Rules :
+
+- When used in tidy evaluation `!!` (bang-bang) and `!!!` (bang-bang-bang) (because have precedence equivalent to unary `-`/`+`)
+
+```{r q-syntax-8-setup}
+`call(!!xyz)` <- "Correct"
+`tribble(~col1, ~col2, "a", "b")` <- "Correct"
+`~ .x + .y` <- "Correct"
+`call(!! xyz)` <- "Wrong"
+`call( !! xyz)` <- "Wrong"
+`call(! !xyz)` <- "Wrong"
+```
+
+<p font-size:2em> Exercise : </p>
+Fix following codes and run it with `Run code`. 
+If it is correct, `Correct` will be returned.
+
+```{r q-syntax-8, exercise = TRUE, exercise.setup = "q-syntax-8-setup"}
+`call(!! xyz)`
+`call( !! xyz)`
+`call(! !xyz)`
+```
+
+`r emo::ji('pushpin')` Rules :
+
+- The help (`?`) operator.
+
+```{r q-syntax-9-setup}
+`package?stats` <- "Correct"
+`?mean` <- "Correct"
+`package ? stats` <- "Wrong"
+`? mean` <- "Wrong"
+```
+
+<p font-size:2em> Exercise : </p>
+Fix following codes and run it with `Run code`. 
+If it is correct, `Correct` will be returned.
+
+```{r q-syntax-9, exercise = TRUE, exercise.setup = "q-syntax-9-setup"}
+`package ? stats`
+`? mean`
+```
+
+#### Extra spaces
+
+`r emo::ji('pushpin')` Rules :
+
+- Adding extra spaces ok if it improves alignment of `=` or `<-`.
+
+```R 
+# Good
+list(
+  total = a + b + c,
+  mean = (a + b + c) / n
+)
+
+# Also fine
+list(
+  total = a + b + c,
+  mean  = (a + b + c) / n
+)
+```
+
+------
+
+### Argument Names
+
+`r emo::ji('pushpin')` Rules : 
+
+- A function’s arguments typically fall into two broad categories: 
+- one supplies the **data** to compute on; 
+- the other controls the **details** of computation. 
+- When you call a function, you typically omit the names of data arguments, because they are used so commonly. 
+- If you override the default value of an argument, use the full name:
+
+```{r q-syntax-10-setup}
+`mean(1:10, na.rm = TRUE)` <- "Correct"
+`mean(x = 1:10, , TRUE)` <- "Wrong"
+`mean(, TRUE, x = c(1:10, NA))` <- "Wrong"
+```
+
+<p font-size:2em> Exercise : </p>
+Fix following codes and run it with `Run code`. 
+If it is correct, `Correct` will be returned.
+
+```{r q-syntax-10, exercise = TRUE, exercise.setup = "q-syntax-10-setup"}
+`mean(x = 1:10, , TRUE)`
+`mean(, TRUE, x = c(1:10, NA))`
+```
+
+------
+
+### Code blocks
+
+`r emo::ji('pushpin')` Rules : 
+
+- Curly braces, `{}`, define the most important hierarchy of R code. 
+- To make this hierarchy easy to see:
+- `{` should be the last character on the line. 
+- Related code (e.g., an `if` clause, a function declaration, a trailing comma, …) must be on the same line as the opening brace.
+- The contents should be indented by two spaces.
+- `}` should be the first character on the line.
+
+```R
+# Good
+if (y < 0 && debug) {
+  message("y is negative")
+}
+
+if (y == 0) {
+  if (x > 0) {
+    log(x)
+  } else {
+    message("x is negative or zero")
+  }
+} else {
+  y^x
+}
+
+# Bad
+if (y < 0 && debug) {
+message("Y is negative")
+}
+
+if (y == 0)
+{
+    if (x > 0) {
+      log(x)
+    } else {
+  message("x is negative or zero")
+    }
+} else { y ^ x }
+```
+
+#### Inline statements
+
+`r emo::ji('pushpin')` Rules : 
+
+- It’s ok to drop the curly braces (`{ }`) for very simple statements that fit on one line, as long as they don’t have side-effects.
+
+```R
+# Good
+y <- 10
+x <- if (y < 20) "Too low" else "Too high"
+```
+
+- Function calls that affect control flow (like `return()`, `stop()` or `continue`) should always go in their own `{}` block:
+
+```R
+# Good
+if (y < 0) {
+  stop("Y is negative")
+}
+
+# Bad
+if (y < 0) stop("Y is negative")
+```
+
+------
+
+### Long lines
+
+`r emo::ji('pushpin')` Rules : 
+
+- Strive to limit your code to 80 characters per line. 
+- This fits comfortably on a printed page with a reasonably sized font. 
+- If you find yourself running out of room, this is a good indication that you should encapsulate some of the work in a separate function.
+- If a function call is too long to fit on a single line, use one line each for the function name, each argument, and the closing `)`. 
+- This makes the code easier to read and to change later.
+
+```R
+
+# Good
+do_something_very_complicated(
+  something = "that",
+  requires = many,
+  arguments = "some of which may be long"
+)
+
+# Bad
+do_something_very_complicated("that", requires, many, arguments,
+                              "some of which may be long"
+                              )
+
+```
+
+- As described under Argument names, you can omit the argument names for very common arguments (i.e. for arguments that are used in almost every invocation of the function). 
+- Short unnamed arguments can also go on the same line as the function name, even if the whole function call spans multiple lines.
+
+<p font-size:2em> Question : </p>
+```{r q-syntax-11, echo = FALSE}
+question("Assume map function needs x, a, b, extra_argument_c, extra_argument_d. which can be allow to align with x in one-line?",
+  answer("a", correct = FALSE),
+  answer("b", correct = TRUE),
+  answer("extra_argument_c", correct = FALSE),
+  answer("extra_argument_d", correct = TRUE),
+  allow_retry = TRUE,
+  random_answer_order = TRUE,
+  type = 'multiple'
+)
+```
+
+- You may also place several arguments on the same line if they are closely related to each other. 
+- For example, strings in calls to `paste()` or `stop()`. When building strings, where possible match one line of code to one line of output.
+
+```R
+# Good
+paste0(
+  "Requirement: ", requires, "\n",
+  "Result: ", result, "\n"
+)
+
+# Bad
+paste0(
+  "Requirement: ", requires,
+  "\n", "Result: ",
+  result, "\n")
+```
+
+------
+
+### Assignment
+
+`r emo::ji('pushpin')` Rules : 
+
+- Use `<-`, not `=`, for assignment.
+
+```{r q-syntax-12-setup}
+`x <- 5` <- "Correct"
+`x = 5` <- "Wrong"
+```
+
+<p font-size:2em> Exercise : </p>
+Fix following codes and run it with `Run code`. 
+If it is correct, `Correct` will be returned.
+
+```{r q-syntax-12, exercise = TRUE, exercise.setup = "q-syntax-12-setup"}
+`x = 5`
+```
+
+------
+
+### Semicolons
+
+`r emo::ji('pushpin')` Rules : 
+
+- Don’t put `;` at the end of a line, and don’t use `;` to put multiple commands on one line.
+
+------
+
+### Quotes
+
+`r emo::ji('pushpin')` Rules : 
+
+- Use `"`, not `'`, for quoting text. 
+- The only exception is when the text already contains double quotes and no single quotes.
+
+```{r q-syntax-13-setup}
+`"Text"` <- "Correct"
+`'Text'` <- "Wrong"
+```
+
+<p font-size:2em> Exercise : </p>
+Fix following codes and run it with `Run code`. 
+If it is correct, `Correct` will be returned.
+
+```{r q-syntax-13, exercise = TRUE, exercise.setup = "q-syntax-12-setup"}
+`'Text'`
+```
