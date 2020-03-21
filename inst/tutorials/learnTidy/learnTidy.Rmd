@@ -13,6 +13,8 @@ date: '2020-03-21'
 
 ```{r setup, include=FALSE}
 library(learnr)
+
+
 knitr::opts_chunk$set(echo = FALSE)
 learnr::tutorial_options(exercise.completion = FALSE)
 ```

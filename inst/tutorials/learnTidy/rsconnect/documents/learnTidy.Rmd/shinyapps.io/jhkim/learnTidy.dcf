@@ -1,0 +1,12 @@
+name: learnTidy
+title: learnTidy
+username:
+account: jhkim
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 1974094
+bundleId: 2905460
+url: https://jhkim.shinyapps.io/learnTidy/
+when: 1584801661.54581
+asMultiple: FALSE
+asStatic: FALSE

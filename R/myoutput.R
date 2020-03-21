@@ -1,13 +1,13 @@
 #' @export
-#' @import learnr
-#' @import rmarkdown
 #'
 myoutput <- function(dev = "png", smart = TRUE, theme = "rstudio",
                      highlight = "textmate", ace_theme = "textmate",
                      extra_dependencies = NULL, css = NULL, pandoc_args = NULL,
                      ...) {
-  require(learnr)
-  require(rmarkdown)
+
+  library(learnr)
+  library(rmarkdown)
+  library(devtools)
 
   args <- c(
     "--section-divs", "--template",
@@ -36,7 +36,7 @@ myoutput <- function(dev = "png", smart = TRUE, theme = "rstudio",
   }
 
   extra_dependencies <- append(extra_dependencies, list(
-    learnr::tutorial_html_dependency(),
+    tutorial_html_dependency(),
     htmltools::htmlDependency( # tutorial_autocompletion_html_dependency()
       name = "tutorial-autocompletion",
       version = utils::packageVersion("learnr"),
