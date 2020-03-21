@@ -2,19 +2,23 @@
 #' @import learnr
 #' @import rmarkdown
 #'
-myoutput <- function(dev = "png", smart = TRUE, theme = "rstudio",
+myoutput <- function(fig_width = 6.5, fig_height = 4, fig_retina = 2, fig_caption = TRUE,
+                     progressive = FALSE, allow_skip = FALSE, dev = "png",
+                     df_print = "paged", smart = TRUE, theme = "rstudio",
                      highlight = "textmate", ace_theme = "textmate",
-                     extra_dependencies = NULL, css = NULL, pandoc_args = NULL,
+                     mathjax = "default", extra_dependencies = NULL, css = NULL,
+                     includes = NULL, md_extensions = NULL, pandoc_args = NULL,
                      ...) {
   require(learnr)
   require(rmarkdown)
-
   args <- c(
-    "--section-divs", "--template",
+    "--section-divs", "--template", rmarkdown::includes_to_pandoc_args(includes),
     rmarkdown::pandoc_path_arg(system.file("rmarkdown/templates/tutorial/resources/myformat.htm", package = "learnTidy"))
   )
 
-  extra_dependencies <- list(rmarkdown::html_dependency_pagedtable())
+  if (identical(df_print, "paged")) {
+    extra_dependencies <- append(extra_dependencies, list(rmarkdown::html_dependency_pagedtable()))
+  }
   rmarkdown_pandoc_html_highlight_args <- getFromNamespace("pandoc_html_highlight_args", "rmarkdown")
   rmarkdown_is_highlightjs <- getFromNamespace("is_highlightjs", "rmarkdown")
   args <- c(args, rmarkdown_pandoc_html_highlight_args("default",highlight))
@@ -34,7 +38,6 @@ myoutput <- function(dev = "png", smart = TRUE, theme = "rstudio",
     stylesheets <- c(stylesheets, "rstudio-theme.css")
     theme <- "cerulean"
   }
-
   extra_dependencies <- append(extra_dependencies, list(
     learnr::tutorial_html_dependency(),
     htmltools::htmlDependency( # tutorial_autocompletion_html_dependency()
@@ -58,46 +61,30 @@ myoutput <- function(dev = "png", smart = TRUE, theme = "rstudio",
       stylesheet = stylesheets
     )
   ))
-
-  args <- c(args, pandoc_variable_arg("progressive","false"), pandoc_variable_arg("allow-skip", "false"))
-
-  pandoc_options <- pandoc_options(
-    to = "html4",
-    from = rmarkdown::from_rmarkdown(TRUE),
-    args = args,
-    ext = ".html"
-  )
-
-  # knitr options ----------------------------------------
-
-  knitr_options <- knitr_options_html(
-    fig_width = 6.5,
-    fig_height = 4,
-    fig_retina = 2,
+  jsbool <- function(value) ifelse(value, "true", "false")
+  args <- c(args, pandoc_variable_arg(
+    "progressive",
+    jsbool(progressive)
+  ))
+  args <- c(args, pandoc_variable_arg("allow-skip", jsbool(allow_skip)))
+  knitr_options <- knitr_options_html(fig_width, fig_height,
+    fig_retina,
     keep_md = FALSE, dev
   )
+  pandoc_options <- pandoc_options(to = "html4", from = rmarkdown::from_rmarkdown(
+    fig_caption,
+    md_extensions
+  ), args = args, ext = ".html")
   knitr_options$opts_chunk$max.print <- 1000
-
-  # base format ------------------------------------------
-
   base_format <- rmarkdown::html_document(
-    smart = smart,
-    theme = theme,
-    lib_dir = NULL,
-    mathjax = "default",
-    pandoc_args = pandoc_args,
-    template = "default",
-    extra_dependencies = extra_dependencies,
-    bootstrap_compatible = TRUE,
-    ...
+    smart = smart, theme = theme,
+    lib_dir = NULL, mathjax = mathjax, pandoc_args = pandoc_args,
+    template = "default", extra_dependencies = extra_dependencies,
+    bootstrap_compatible = TRUE, ...
   )
-
   rmarkdown::output_format(
-    knitr = knitr_options,
-    pandoc = pandoc_options,
-    clean_supporting = FALSE,
-    df_print = "paged",
-    base_format = base_format
+    knitr = knitr_options, pandoc = pandoc_options,
+    clean_supporting = FALSE, df_print = df_print, base_format = base_format
   )
 }
 
