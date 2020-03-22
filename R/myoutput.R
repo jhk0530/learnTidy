@@ -7,7 +7,6 @@ myoutput <- function(dev = "png", smart = TRUE, theme = "rstudio",
 
   library(learnr)
   library(rmarkdown)
-  library(devtools)
 
   args <- c(
     "--section-divs", "--template",
