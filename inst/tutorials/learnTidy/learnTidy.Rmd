@@ -1,14 +1,13 @@
 ---
 title: "LearnTidy"
-subtitle: "Learn Tidyverse Style with Shiny"
+subtitle: "Learn Tidyverse Style"
 output: learnTidy::myoutput
 runtime: shiny_prerendered
 author: 
   name: 'jhk0530'
   affiliation: 'UNIST'
   github: 'jhk0530'
-date: '2020-03-21'
-
+date: '2020-03-22'
 ---
 
 ```{r setup, include=FALSE}
