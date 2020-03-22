@@ -13,7 +13,6 @@ date: '2020-03-22'
 ```{r setup, include=FALSE}
 library(learnr)
 
-
 knitr::opts_chunk$set(echo = FALSE)
 learnr::tutorial_options(exercise.completion = FALSE)
 ```
@@ -24,7 +23,7 @@ learnr::tutorial_options(exercise.completion = FALSE)
 
 ### Names
 
-`r emo::ji('pushpin')` Rules :
+ Rules :
 
 - File names should be meaningful and end in .R. 
 - Avoid using special characters in file names - stick with numbers, letters, `-`, and `_`. 
@@ -45,7 +44,7 @@ If it is correct, `Correct` will be returned.
 `utility functions.r`
 ```
 
-`r emo::ji('pushpin')` Rules :
+ Rules :
 
 - If files should be run in a particular order, prefix them with numbers. 
 - If it seems likely you’ll have more than 10 files, left pad with zero:
@@ -74,7 +73,7 @@ visualize.R
 Fix following name of codes, `1_explore.R` and `visualize.R` then run it with `Run code`. 
 If it is correct, `TRUE` will be returned.
 
-```{r q-files-2, exercise = TRUE, exersie.setup = "q2-setup"}
+```{r q-files-2, exercise = TRUE, exercise.setup = "q-files-2-setup"}
 `1_explore.R`
 `visualize.R`
 ```
@@ -83,7 +82,7 @@ If it is correct, `TRUE` will be returned.
 
 ### Internal Structure
 
-`r emo::ji('pushpin')` Rules :
+ Rules :
 
 - Use commented lines of `-` and `=` to break up your file into easily readable chunks.
 
@@ -105,7 +104,7 @@ question("Select all recommended style of comment.",
 
 ### Object Names
 
-`r emo::ji('pushpin')` Rules :
+ Rules :
 
 - Variable and function names should use only lowercase letters, numbers, and `_`. 
 - Use underscores (`_`) (so called snake case) to separate words within a name.
@@ -123,7 +122,7 @@ If it is correct, `Correct` will be returned.
 `DayOne` 
 ```
 
-`r emo::ji('pushpin')` Rules :
+ Rules :
 
 - Base R uses dots in function names (`contrib.url()`) and class names (`data.frame`), but it’s better to reserve dots exclusively for the S3 object system. In S3, methods are given the name function.class. 
 - If you also use . in function and class names, you end up with confusing methods like as.data.frame.data.frame().
@@ -152,7 +151,7 @@ question("Select all recommended style of object name.",
 
 #### Commas
 
-`r emo::ji('pushpin')` Rules :
+ Rules :
 
 - Always put a space after a comma, never before, just like in regular English. 
 
@@ -173,7 +172,7 @@ If it is correct, `Correct` will be returned.
 
 #### Parentheses
 
-`r emo::ji('pushpin')` Rules :
+ Rules :
 
 - Do not put spaces inside or outside parentheses for regular function calls.
 - Place a space before and after `()` when used with `if`, `for`, or `while`.
@@ -202,7 +201,7 @@ If it is correct, `Correct` will be returned.
 
 #### Infix operators
 
-`r emo::ji('pushpin')` Rules :
+ Rules :
 
 - Most infix operators (`==`, `+`, `-`, `<-`, etc.) should always be surrounded by spaces:
 
@@ -222,7 +221,7 @@ If it is correct, `Correct` will be returned.
 `if(debug) show(x)`
 ```
 
-`r emo::ji('pushpin')` Rules :
+ Rules :
 
 - There are a few exceptions, which should never be surrounded by spaces:
 - The operators with high precedence: `::`, `:::`, `$`, `@`, `[`, `[[`, `^`, unary `-`, unary `+`, and `:`.
@@ -246,7 +245,7 @@ If it is correct, `Correct` will be returned.
 `x <- 1 : 10`
 ```
 
-`r emo::ji('pushpin')` Rules :
+ Rules :
 
 - Single-sided formulas (`~`) when the right-hand side is a single identifier:
 - Note that single-sided formulas with a complex right-hand side do need a space:
@@ -270,7 +269,7 @@ If it is correct, `Correct` will be returned.
 `~.x + .y`
 ```
 
-`r emo::ji('pushpin')` Rules :
+ Rules :
 
 - When used in tidy evaluation `!!` (bang-bang) and `!!!` (bang-bang-bang) (because have precedence equivalent to unary `-`/`+`)
 
@@ -293,7 +292,7 @@ If it is correct, `Correct` will be returned.
 `call(! !xyz)`
 ```
 
-`r emo::ji('pushpin')` Rules :
+ Rules :
 
 - The help (`?`) operator.
 
@@ -315,7 +314,7 @@ If it is correct, `Correct` will be returned.
 
 #### Extra spaces
 
-`r emo::ji('pushpin')` Rules :
+ Rules :
 
 - Adding extra spaces ok if it improves alignment of `=` or `<-`.
 
@@ -337,7 +336,7 @@ list(
 
 ### Argument Names
 
-`r emo::ji('pushpin')` Rules : 
+ Rules : 
 
 - A function’s arguments typically fall into two broad categories: 
 - one supplies the **data** to compute on; 
@@ -364,7 +363,7 @@ If it is correct, `Correct` will be returned.
 
 ### Code blocks
 
-`r emo::ji('pushpin')` Rules : 
+ Rules : 
 
 - Curly braces, `{}`, define the most important hierarchy of R code. 
 - To make this hierarchy easy to see:
@@ -406,7 +405,7 @@ if (y == 0)
 
 #### Inline statements
 
-`r emo::ji('pushpin')` Rules : 
+ Rules : 
 
 - It’s ok to drop the curly braces (`{ }`) for very simple statements that fit on one line, as long as they don’t have side-effects.
 
@@ -432,7 +431,7 @@ if (y < 0) stop("Y is negative")
 
 ### Long lines
 
-`r emo::ji('pushpin')` Rules : 
+ Rules : 
 
 - Strive to limit your code to 80 characters per line. 
 - This fits comfortably on a printed page with a reasonably sized font. 
@@ -493,7 +492,7 @@ paste0(
 
 ### Assignment
 
-`r emo::ji('pushpin')` Rules : 
+ Rules : 
 
 - Use `<-`, not `=`, for assignment.
 
@@ -514,7 +513,7 @@ If it is correct, `Correct` will be returned.
 
 ### Semicolons
 
-`r emo::ji('pushpin')` Rules : 
+ Rules : 
 
 - Don’t put `;` at the end of a line, and don’t use `;` to put multiple commands on one line.
 
@@ -522,7 +521,7 @@ If it is correct, `Correct` will be returned.
 
 ### Quotes
 
-`r emo::ji('pushpin')` Rules : 
+ Rules : 
 
 - Use `"`, not `'`, for quoting text. 
 - The only exception is when the text already contains double quotes and no single quotes.
@@ -546,7 +545,7 @@ If it is correct, `Correct` will be returned.
 
 ### Naming
 
-`r emo::ji('pushpin')` Rules : 
+ Rules : 
 
 - As well as following the general advice for object names, strive to use verbs for function names:
 
@@ -562,7 +561,7 @@ question("Which one is more preferable for function name?",
 
 ### Long lines
 
-`r emo::ji('pushpin')` Rules : 
+ Rules : 
 
 - If a function definition runs over multiple lines, indent the second line to where the definition starts.
 
@@ -590,7 +589,7 @@ question("From code above, which argument should be moved?",
 
 ### `return()`
 
-`r emo::ji('pushpin')` Rules : 
+ Rules : 
 
 - Only use `return()` for early returns. 
 - Otherwise, rely on R to return the result of the last evaluated expression.
@@ -632,7 +631,7 @@ question("From code above, select ore preferable codes",
 
 ### Comments
 
-`r emo::ji('pushpin')` Rules : 
+ Rules : 
 
 - In code, use comments to explain the “why” not the “what” or “how”. 
 - Each line of a comment should begin with the comment symbol and a single space: `(# )`.
@@ -684,7 +683,7 @@ question("From code above, select recommended style comments",
 
 ### Introduction
 
-`r emo::ji('pushpin')` Rules : 
+ Rules : 
 
 - Use `%>%` to emphasise a sequence of actions, rather than the object that the actions are being performed on.
 - Avoid using the pipe when:
@@ -694,7 +693,7 @@ question("From code above, select recommended style comments",
 
 ### Whitespace
 
-`r emo::ji('pushpin')` Rules : 
+ Rules : 
 
 - `%>%` should always have a space before it, and should usually be followed by a new line. 
 - After the first step, each line should be indented by two spaces. 
@@ -721,7 +720,7 @@ question("From code above, which function should be moved?",
 
 ### Long lines
 
-`r emo::ji('pushpin')` Rules :
+ Rules :
 
 - If the arguments to a function don’t all fit on one line, put each argument on its own line and indent:
 
@@ -737,7 +736,7 @@ iris %>%
 
 ### Short pipes
 
-`r emo::ji('pushpin')` Rules : 
+ Rules : 
 
 - A one-step pipe can stay on one line 
 - but unless you plan to expand it later on, you should consider rewriting it to a regular function call.
@@ -757,7 +756,7 @@ question("to pipe arrange(iris, Spicies), what can be good choice?",
 
 ### No arguments
 
-`r emo::ji('pushpin')` Rules : 
+ Rules : 
 
 - `magrittr` allows you to omit () on functions that don’t have arguments. 
 - Avoid this feature.
@@ -776,7 +775,7 @@ x %>%
 
 ### Assignment
 
-`r emo::ji('pushpin')` Rules : 
+ Rules : 
 
 - There are three acceptable forms of assignment:
 - Variable name and assignment on separate lines: (1)
@@ -819,13 +818,13 @@ question("which pair is correctly linked? (from above code and explanation)",
 
 ### Introduction
 
-`r emo::ji('pushpin')` Rules : 
+ Rules : 
 
 - Styling suggestions for `+` used to separate ggplot2 layers are very similar to those for `%>%` in pipelines.
 
 ### Whitespace
 
-`r emo::ji('pushpin')` Rules : 
+ Rules : 
 
 - `+` should always have a space before it, and should be followed by a new line. 
 - This is true even if your plot has only two layers. 
@@ -863,7 +862,7 @@ question("Which is problem for each code above?",
 
 ### Long lines
 
-`r emo::ji('pushpin')` Rules : 
+ Rules : 
 
 - If the arguments to a `ggplot2` layer don’t all fit on one line, put each argument on its own line and indent:
 
@@ -885,7 +884,7 @@ question("Which argument should be moved?",
 )
 ```
 
-`r emo::ji('pushpin')` Rules : 
+:blue_circle: Rules : 
 
 - `ggplot2` allows you to do data manipulation, such as filtering or slicing, within the data argument. 
 - Avoid this, and instead do the data manipulation in a pipeline before starting plotting.
