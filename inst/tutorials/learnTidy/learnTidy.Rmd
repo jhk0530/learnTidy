@@ -19,7 +19,7 @@ knitr::opts_chunk$set(echo = FALSE)
 learnr::tutorial_options(exercise.completion = FALSE)
 ```
 
-## Files
+## 1. Files
 
 ------
 
@@ -100,8 +100,7 @@ question("Select all recommended style of comment.",
 )
 ```
 
-
-## Syntax
+## 2. Syntax
 
 ------
 
@@ -542,7 +541,7 @@ If it is correct, `Correct` will be returned.
 `'Text'`
 ```
 
-## Functions
+## 3. Functions
 
 ------
 
@@ -677,6 +676,141 @@ question("From code above, select recommended style comments",
   answer("4", correct = TRUE),
   answer("5", correct = FALSE),
   answer("6", correct = FALSE),
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+## 4. Pipes
+
+### Introduction
+
+`r emo::ji('pushpin')` Rules : 
+
+- Use `%>%` to emphasise a sequence of actions, rather than the object that the actions are being performed on.
+- Avoid using the pipe when:
+- You need to manipulate more than one object at a time.
+- Reserve pipes for a sequence of steps applied to one primary object.
+- There are meaningful intermediate objects that could be given informative names.
+
+### Whitespace
+
+`r emo::ji('pushpin')` Rules : 
+
+- `%>%` should always have a space before it, and should usually be followed by a new line. 
+- After the first step, each line should be indented by two spaces. 
+- This structure makes it easier to add new steps (or rearrange existing steps) and harder to overlook a step.
+
+```R
+iris %>% group_by(Species) %>% summarize_all(mean) %>%
+ungroup %>% gather(measure, value, -Species) %>%
+  arrange(value)
+```
+
+<p font-size:2em> Question : </p>
+```{r q-pipes-1, echo = FALSE}
+question("From code above, which function should be moved?",
+  answer("group_by", correct = FALSE),
+  answer("summarize_all", correct = TRUE),
+  answer("ungroup", correct = TRUE),
+  answer("gather", correct = TRUE),
+  answer("arrange", correct = FALSE),
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+### Long lines
+
+`r emo::ji('pushpin')` Rules :
+
+- If the arguments to a function don’t all fit on one line, put each argument on its own line and indent:
+
+```R
+iris %>%
+  group_by(Species) %>%
+  summarise(
+    Sepal.Length = mean(Sepal.Length),
+    Sepal.Width = mean(Sepal.Width),
+    Species = n_distinct(Species)
+  )
+```
+
+### Short pipes
+
+`r emo::ji('pushpin')` Rules : 
+
+- A one-step pipe can stay on one line 
+- but unless you plan to expand it later on, you should consider rewriting it to a regular function call.
+- Sometimes it’s useful to include a short pipe as an argument to a function in a longer pipe. 
+- Carefully consider whether the code is more readable with a short inline pipe (which doesn’t require a lookup elsewhere)
+- or if it’s better to move the code outside the pipe and give it an evocative name.
+
+<p font-size:2em> Question : </p>
+```{r q-pipes-2, echo = FALSE}
+question("to pipe arrange(iris, Spicies), what can be good choice?",
+  answer("iris %>% arrange(Species)", correct = TRUE),
+  answer("don't use pipe", correct = TRUE),
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+### No arguments
+
+`r emo::ji('pushpin')` Rules : 
+
+- `magrittr` allows you to omit () on functions that don’t have arguments. 
+- Avoid this feature.
+
+```R
+# Good
+x %>% 
+  unique() %>%
+  sort()
+
+# Bad
+x %>% 
+  unique %>%
+  sort
+```
+
+### Assignment
+
+`r emo::ji('pushpin')` Rules : 
+
+- There are three acceptable forms of assignment:
+- Variable name and assignment on separate lines: (1)
+- Variable name and assignment on the same line: (2)
+- Assignment at the end of the pipe with `->`: (3)
+- The `magrittr` package provides the `%<>%` operator as a shortcut for modifying an object in place. 
+- Avoid this operator.
+
+```R
+iris_long <-
+  iris %>%
+  gather(measure, value, -Species) %>%
+  arrange(-value) # A
+  
+iris_long <- iris %>%
+  gather(measure, value, -Species) %>%
+  arrange(-value) # B
+  
+iris %>%
+  gather(measure, value, -Species) %>%
+  arrange(-value) ->
+  iris_long  # C
+```
+
+<p font-size:2em> Question : </p>
+```{r q-pipes-3, echo = FALSE}
+question("which pair is correctly linked? (from above code and explanation)",
+  answer("A - 1, B - 2, C - 3", correct = TRUE),
+  answer("A - 1, B - 3, C - 2", correct = FALSE),
+  answer("A - 2, B - 1, C - 3", correct = FALSE),
+  answer("A - 2, B - 3, C - 1", correct = FALSE),
+  answer("A - 3, B - 1, C - 2", correct = FALSE),
+  answer("A - 3, B - 2, C - 1", correct = FALSE),
   allow_retry = TRUE,
   random_answer_order = TRUE
 )
