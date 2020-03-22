@@ -541,3 +541,143 @@ If it is correct, `Correct` will be returned.
 ```{r q-syntax-13, exercise = TRUE, exercise.setup = "q-syntax-12-setup"}
 `'Text'`
 ```
+
+## Functions
+
+------
+
+### Naming
+
+`r emo::ji('pushpin')` Rules : 
+
+- As well as following the general advice for object names, strive to use verbs for function names:
+
+<p font-size:2em> Question : </p>
+```{r q-functions-1, echo = FALSE}
+question("Which one is more preferable for function name?",
+  answer("add_row()", correct = TRUE),
+  answer("row_adder()", correct = FALSE),
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+### Long lines
+
+`r emo::ji('pushpin')` Rules : 
+
+- If a function definition runs over multiple lines, indent the second line to where the definition starts.
+
+
+```R
+long_function_name <- function(a = "a long argument",
+  b = "another argument",c = "another long argument", 
+                               d = "Final long argument") {
+  # Here it's hard to spot where the definition ends and the
+  # code begins
+}
+```
+
+<p font-size:2em> Question : </p>
+```{r q-functions-2, echo = FALSE}
+question("From code above, which argument should be moved?",
+  answer("a", correct = FALSE),
+  answer("b", correct = TRUE),
+  answer("c", correct = TRUE),
+  answer("d", correct = FALSE),
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+### `return()`
+
+`r emo::ji('pushpin')` Rules : 
+
+- Only use `return()` for early returns. 
+- Otherwise, rely on R to return the result of the last evaluated expression.
+- Return statements should always be on their own line because they have important effects on the control flow. 
+
+```
+add_two <- function(x, y) {
+  x + y
+} # 1
+
+add_two <- function(x, y) {
+  return(x + y)
+} # 2
+
+find_abs <- function(x) {
+  if (x > 0) {
+    return(x)
+  }
+  x * -1
+} # 3
+
+find_abs <- function(x) {
+  if (x > 0) return(x)
+  x * -1
+} # 4
+```
+
+<p font-size:2em> Question : </p>
+```{r q-functions-3, echo = FALSE}
+question("From code above, select ore preferable codes",
+  answer("1", correct = TRUE),
+  answer("2", correct = FALSE),
+  answer("3", correct = TRUE),
+  answer("4", correct = TRUE),
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+### Comments
+
+`r emo::ji('pushpin')` Rules : 
+
+- In code, use comments to explain the “why” not the “what” or “how”. 
+- Each line of a comment should begin with the comment symbol and a single space: `(# )`.
+- Comments should be in sentence case, and only end with a full stop `(.)` if they contain at least two sentences:
+
+```R
+# 1
+# Objects like data frames are treated as leaves
+x <- map_if(x, is_bare_list, recurse) 
+
+# 2
+# Recurse only with bare lists
+x <- map_if(x, is_bare_list, recurse)
+
+# 3
+# Objects like data frames are treated as leaves
+x <- map_if(x, is_bare_list, recurse)
+
+# 4
+# Do not use `is.list()`. Objects like data frames must be treated
+# as leaves.
+x <- map_if(x, is_bare_list, recurse)
+
+# 5
+# objects like data frames are treated as leaves
+x <- map_if(x, is_bare_list, recurse)
+
+# 6
+# Objects like data frames are treated as leaves.
+x <- map_if(x, is_bare_list, recurse)
+
+```
+
+<p font-size:2em> Question : </p>
+```{r q-functions-4, echo = FALSE}
+question("From code above, select recommended style comments",
+  answer("1", correct = TRUE),
+  answer("2", correct = FALSE),
+  answer("3", correct = TRUE),
+  answer("4", correct = TRUE),
+  answer("5", correct = FALSE),
+  answer("6", correct = FALSE),
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
