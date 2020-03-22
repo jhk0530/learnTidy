@@ -815,3 +815,91 @@ question("which pair is correctly linked? (from above code and explanation)",
   random_answer_order = TRUE
 )
 ```
+
+## 5. ggplot2
+
+### Introduction
+
+`r emo::ji('pushpin')` Rules : 
+
+- Styling suggestions for `+` used to separate ggplot2 layers are very similar to those for `%>%` in pipelines.
+
+### Whitespace
+
+`r emo::ji('pushpin')` Rules : 
+
+- `+` should always have a space before it, and should be followed by a new line. 
+- This is true even if your plot has only two layers. 
+- After the first step, each line should be indented by two spaces.
+
+```R
+iris %>%
+  filter(Species == "setosa") %>%
+  ggplot(aes(x = Sepal.Width, y = Sepal.Length)) +
+  geom_point() # A
+
+iris %>%
+  filter(Species == "setosa") %>%
+  ggplot(aes(x = Sepal.Width, y = Sepal.Length)) +
+    geom_point() # B
+
+iris %>%
+  filter(Species == "setosa") %>%
+  ggplot(aes(x = Sepal.Width, y = Sepal.Length)) + geom_point() # C
+```
+
+<p font-size:2em> Question : </p>
+```{r q-ggplot-1, echo = FALSE}
+question("Which is problem for each code above?",
+  answer("A - Fine, B - Indent, C - Multiple line", correct = TRUE),
+  answer("A - Fine, B - Multiple line, C - Indent", correct = FALSE),
+  answer("A - Indent, B - Fine, C - Multiple line", correct = FALSE),
+  answer("A - Indent, B - Multiple line, C - Fine", correct = FALSE),
+  answer("A - Multiple line, B - Fine, C - Indent", correct = FALSE),
+  answer("A - Multiple line, B - Indent, C - Fine", correct = FALSE),
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+### Long lines
+
+`r emo::ji('pushpin')` Rules : 
+
+- If the arguments to a `ggplot2` layer don’t all fit on one line, put each argument on its own line and indent:
+
+```R
+ggplot(aes(x = Sepal.Width, y = Sepal.Length, color = Species)) +
+  geom_point() +
+  labs(x = "Sepal width, in cm", y = "Sepal length, in cm", title = "Sepal length vs. width of irises") 
+```
+
+<p font-size:2em> Question : </p>
+
+```{r q-ggplot-2, echo = FALSE}
+question("Which argument should be moved?",
+  answer("x", correct = FALSE),
+  answer("y", correct = TRUE),
+  answer("title", correct = TRUE),
+  allow_retry = TRUE,
+  random_answer_order = TRUE
+)
+```
+
+`r emo::ji('pushpin')` Rules : 
+
+- `ggplot2` allows you to do data manipulation, such as filtering or slicing, within the data argument. 
+- Avoid this, and instead do the data manipulation in a pipeline before starting plotting.
+
+
+```R
+# Good
+iris %>%
+  filter(Species == "setosa") %>%
+  ggplot(aes(x = Sepal.Width, y = Sepal.Length)) +
+  geom_point()
+
+# Bad
+ggplot(filter(iris, Species == "setosa"), aes(x = Sepal.Width, y = Sepal.Length)) +
+  geom_point()
+```
