@@ -1,15 +1,18 @@
 Package: learnTidy
-Title: What the Package Does (One Line, Title Case)
+Title: learn tidyverse style guide 
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Jinhwan",
+           family = "Kim",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: What license it uses
+           email = "hwanistic@gmail.com")
+Description: customized learnr application with rmarkdown.
+License: MIT
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.0
-Imports: learnr
+URL: https:github.com/jhk0530/learntidy
+Imports: 
+  learnr,
+  rmarkdown
+
